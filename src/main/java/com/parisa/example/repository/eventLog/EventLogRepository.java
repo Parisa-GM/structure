@@ -6,5 +6,5 @@ import com.sun.xml.bind.v2.model.core.ID;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EventLogRepository extends AbstractBaseRepository<EventLog, ID> {
+public interface EventLogRepository extends AbstractBaseRepository<EventLog, ID>,EventLogRepositoryCustom {
 }

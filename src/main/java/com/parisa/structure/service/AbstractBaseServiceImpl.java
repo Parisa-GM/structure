@@ -8,28 +8,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/*
 @Service
-@Transactional
+@Transactional*/
 public abstract class AbstractBaseServiceImpl<T extends AbstractBaseEntity, ID extends Serializable>
         implements AbstractBaseService<T, ID> {
-
+    @Autowired
     private AbstractBaseRepository<T, ID> abstractBaseRepository;
 
-    protected abstract Class<T> getDomaimClass();
+    protected abstract Class<T> getDomainClass();
 
-    protected Class<T> domainClass = this.getDomaimClass();
+    protected Class<T> domainClass = this.getDomainClass();
 
 
-    @Autowired
+  /*  @Autowired
     public AbstractBaseServiceImpl(AbstractBaseRepository<T, ID> abstractBaseRepository) {
         this.abstractBaseRepository = abstractBaseRepository;
-    }
+    }*/
 
     @Override
     public T save(T entity) {
+        if (entity.getId() == null) {
+            entity.setCreatedAt(LocalDateTime.now());
+        } else {
+            entity.setUpdatedAt(LocalDateTime.now());
+        }
         return (T) abstractBaseRepository.save(entity);
     }
 
